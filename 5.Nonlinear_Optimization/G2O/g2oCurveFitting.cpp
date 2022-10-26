@@ -28,8 +28,12 @@ class CurveFittingVertex : public g2o::BaseVertex<3, Eigen::Vector3d> {
         }
 
         // The dummy read / write function
-        virtual bool read(std::istream &in) {}
-        virtual bool write(std::ostream &out) const {}
+        virtual bool read(std::istream &in) override {
+            return 0;
+        }
+        virtual bool write(std::ostream &out) const override {
+            return 0;
+        }
 };
 
 // Edge: 1D error term, connected to exactly one vertex
@@ -38,6 +42,7 @@ class CurveFittingEdge : public g2o::BaseUnaryEdge<1, double, CurveFittingVertex
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW             // Not mandatory
 
         CurveFittingEdge(double _x) : BaseUnaryEdge(), x(_x) {}
+        ~CurveFittingEdge() = default;
 
         // Define the error term computation
         virtual void computeError() override {
@@ -57,8 +62,12 @@ class CurveFittingEdge : public g2o::BaseUnaryEdge<1, double, CurveFittingVertex
             _jacobianOplusXi[2] = -y;
         }
 
-        virtual bool read(std::istream &in) {}
-        virtual bool write(std::ostream &out) const {}
+        virtual bool read(std::istream &in) override {
+            return 0;
+        }
+        virtual bool write(std::ostream &out) const override {
+            return 0;
+        }
 
     public:
         double x;           // X data, note y is given in measurement
@@ -107,7 +116,7 @@ int main(int argc, char **argv) {
     for (int i = 0; i < N; ++i) {
         CurveFittingEdge *edge = new CurveFittingEdge(x_data[i]);
         edge->setId(i);
-        edge->setVertex(0, v);                                                                  // Connect to the vertex
+        edge->setVertex(0, v);                                                            // Connect to the vertex
         edge->setMeasurement(y_data[i]);                                                        // measurement
         edge->setInformation(Eigen::Matrix<double, 1, 1>::Identity() / (w_sigma * w_sigma));    // Set the information matrix
         optimizer.addEdge(edge);
@@ -125,6 +134,6 @@ int main(int argc, char **argv) {
     // Print the results
     Eigen::Vector3d abc_estimate = v->estimate();
     std::cout << "Estimated model = " << abc_estimate.transpose() << std::endl;
-
+    
     return 0;
 }
