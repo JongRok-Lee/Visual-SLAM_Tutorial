@@ -15,7 +15,7 @@
 // Vertex: 3D vector
 class CurveFittingVertex : public g2o::BaseVertex<3, Eigen::Vector3d> {
     public:
-        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW             // Not mandatory
 
         // Override the reset function
         virtual void setToOriginImpl() override {
@@ -35,7 +35,7 @@ class CurveFittingVertex : public g2o::BaseVertex<3, Eigen::Vector3d> {
 // Edge: 1D error term, connected to exactly one vertex
 class CurveFittingEdge : public g2o::BaseUnaryEdge<1, double, CurveFittingVertex> {
     public:
-        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW             // Not mandatory
 
         CurveFittingEdge(double _x) : BaseUnaryEdge(), x(_x) {}
 
@@ -47,7 +47,7 @@ class CurveFittingEdge : public g2o::BaseUnaryEdge<1, double, CurveFittingVertex
             _error(0,0) = _measurement - std::exp(abc(0, 0) * x * x + abc(1, 0) * x + abc(2, 0));
         }
 
-        // The jacobian
+        // The Jacobian
         virtual void linearizeOplus() override {
             const CurveFittingVertex *v = static_cast<const CurveFittingVertex *>(_vertices[0]);
             const Eigen::Vector3d abc = v->estimate();
