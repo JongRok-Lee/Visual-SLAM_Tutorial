@@ -1,5 +1,5 @@
 # Visual-SLAM Tutorial
-Introduction to visual-SLAM 책을 공부하며, 작성한 코드 레포지토리입니다. 아래 라이브러리 사용에 맞게 `CMakeLists.txt` 파일을 수정하고, 기존 [slambook2](https://github.com/gaoxiang12/slambook2) 코드들을 조금씩 개량해 작성하였습니다.
+[Introduction to visual-SLAM](https://github.com/gaoxiang12/slambook-en) 책을 공부하며, 작성한 코드 레포지토리입니다. 아래 라이브러리 사용에 맞게 `CMakeLists.txt` 파일을 수정하고, 기존 [slambook2](https://github.com/gaoxiang12/slambook2) 코드들을 조금씩 개량해 작성하였습니다.
 
 ## 3rd 파티 라이브러리
 OpenCV (4.2 with `ROS Noetic`)  
