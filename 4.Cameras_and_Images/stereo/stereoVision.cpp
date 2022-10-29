@@ -47,19 +47,22 @@ int main(int argc, char **argv) {
 
             // The dimensions are xyz and bgr.
             Eigen::Vector6d point;
-            cv::Vec3b bgr = left.at<cv::Vec3b>(v, u);
-            point << 0, 0, 0, static_cast<double>(bgr[0])/255,
-                    static_cast<double>(bgr[1])/255,
-                    static_cast<double>(bgr[2])/255;
 
-
-            // compute the depth from disparity
+            // Compute the depth from disparity
+            // u = fx*x + cx, v = fy*y + cy
+            // z = fx * b / (uL - uR)
             double x = (u - cx) / fx;
             double y = (v - cy) / fy;
             double depth = fx * b / (disparity.at<float>(v, u));
             point[0] = x * depth;
             point[1] = y * depth;
             point[2] = depth;
+
+            // Get the BGR values
+            cv::Vec3b bgr = left.at<cv::Vec3b>(v, u);
+            point[3] = static_cast<double>(bgr[0])/255;
+            point[4] = static_cast<double>(bgr[1])/255;
+            point[5] = static_cast<double>(bgr[2])/255;
 
             pointcloud.push_back(point);
         }
