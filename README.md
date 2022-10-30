@@ -20,4 +20,7 @@ find_package(Pangolin REQUIRED PATHS "~/3rd_Party/Pangolin/Pangolin-0.6/install/
 ```
 Prefix가 아닌 local에 빌드 시, `CMakeLists.txt`파일을 수정하여 사용바랍니다.
 
+## 원본 코드와의 변경 사항
+새로운 라이브러리 버전, 제게 익숙한 Cmake 컨벤션, C++언어에 맞게 수정하고 개량할 수 있는 부분들을 수정하였습니다.  
+구체적인 수정사항은 `수정사항.md` 파일에 기입하였습니다.
 
