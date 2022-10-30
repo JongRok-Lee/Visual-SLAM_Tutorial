@@ -17,6 +17,8 @@ find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Sophus REQUIRED PATHS "~/3rd_Party/Sophus/Sophus-22.10/install/share/sophus/cmake")
 find_package(Pangolin REQUIRED PATHS "~/3rd_Party/Pangolin/Pangolin-0.6/install/lib/cmake")
+find_package(g2o REQUIRED PATHS "~/3rd_Party/G2O/g2o-20201223_git/install/lib/cmake")
+find_package(Ceres REQUIRED PATHS "~/3rd_Party/Ceres/ceres-solver-2.1.0/install/lib/cmake")
 ```
 Prefix가 아닌 local에 빌드 시, `CMakeLists.txt`파일을 수정하여 사용바랍니다.
 
