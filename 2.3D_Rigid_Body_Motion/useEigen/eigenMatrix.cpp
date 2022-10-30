@@ -1,6 +1,5 @@
 #include <iostream>
 #include <chrono>
-#include <ctime>
 #include <Eigen/Core>
 #include <Eigen/Dense>
 
@@ -90,26 +89,25 @@ int main(int argc, char **argv) {
     matrix_NN = matrix_NN * matrix_NN.transpose();  // Guarantee semi−positive definite
     Eigen::Matrix<double, MATRIX_SIZE, 1> v_Nd = Eigen::MatrixXd::Random(MATRIX_SIZE, 1);
 
-    std::chrono::system_clock::time_point time_stt = std::chrono::system_clock::now(); // timing
+    std::chrono::steady_clock::time_point time_stt = std::chrono::steady_clock::now(); // timing
     // Direct inversion
     Eigen::Matrix<double, MATRIX_SIZE, 1> x = matrix_NN.inverse() * v_Nd;
-    std::chrono::microseconds duration = 
-        std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_stt);
-    std::cout << "Time of normal inverse is " << 0.001 * duration.count() << "ms" << std::endl;
-    std::cout << "x = " << x.transpose() << std::endl;
+    std::chrono::duration<double> time_used = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - time_stt);
+    std::cout << "Time of normal inverse is " << time_used.count() << " seconds.\n";
+    std::cout << "x = " << x.transpose() << std::endl << std::endl;
 
     // Usually solved by matrix decomposition, such as QR decomposition, the speed will be much faster
-    time_stt = std::chrono::system_clock::now();
+    time_stt = std::chrono::steady_clock::now();
     x = matrix_NN.colPivHouseholderQr().solve(v_Nd);
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_stt);
-    std::cout << "Time of normal inverse is " << 0.001 * duration.count() << "ms" << std::endl;
-    std::cout << "x = " << x.transpose() << std::endl;
+    time_used = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - time_stt);
+    std::cout << "Time of normal inverse is " << time_used.count() << " seconds.\n";
+    std::cout << "x = " << x.transpose() << std::endl << std::endl;
 
     // For positive definite matrices, you can also use cholesky decomposition to solve equations.
-    time_stt = std::chrono::system_clock::now();
+    time_stt = std::chrono::steady_clock::now();
     x = matrix_NN.ldlt().solve(v_Nd);
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - time_stt);
-    std::cout << "Time of normal inverse is " << 0.001 * duration.count() << " ms" << std::endl;
+    time_used = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - time_stt);
+    std::cout << "Time of normal inverse is " << time_used.count() << " seconds.\n";
     std::cout << "x = " << x.transpose() << std::endl;
 
     return 0;

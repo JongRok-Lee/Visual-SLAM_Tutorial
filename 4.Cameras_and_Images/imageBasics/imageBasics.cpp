@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     // Check the data is correctly loaded
     if (image.data == nullptr) {        // file does not exist
         std::cerr << "file " << argv[1] << " not exist." << std::endl;
-        return 1;
+        throw std::invalid_argument("usage: ./imgBasics ../ubuntu.png");
     }
 
     // Print some basic information
@@ -46,7 +46,6 @@ int main(int argc, char** argv) {
     // Changing the image_another will also change image
     image_anothor(cv::Rect(0, 0, 100, 100)).setTo(0);               // set top−left 100∗100 block to zero
     cv::imshow("image", image);
-    cv::waitKey(0);
 
     // Use cv::Mat::clone to actually clone the data
     cv::Mat image_clone = image.clone();

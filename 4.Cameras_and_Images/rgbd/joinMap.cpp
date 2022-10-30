@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     std::ifstream fin("../pose.txt");
     if (!fin) {
         std::cerr << "Please run the program in the directory that has pose.txt" << std::endl;
-        return 1;
+        throw std::invalid_argument("usage: ./joinMap ../pose.txt");
     }
 
     for (size_t i = 0; i < 5; ++i) {

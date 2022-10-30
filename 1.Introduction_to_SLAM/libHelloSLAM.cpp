@@ -1,6 +1,5 @@
 #include "libHelloSLAM.h"
-using namespace std;
 
 void printHello() {
-  cout << "Hello SLAM" << endl;
+    std::cout << "Hello SLAM" << std::endl;
 }
