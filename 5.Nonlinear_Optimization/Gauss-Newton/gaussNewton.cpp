@@ -38,17 +38,22 @@ int main(int argc, char** argv) {
             J(1,0) = -xi * y_hat;                           // derror/db
             J(2,0) = -y_hat;                                // derror/dc
 
-            H += inv_simga * inv_simga * J * J.transpose();
-            // H += J * J.transpose();
-            b += - inv_simga * inv_simga * error * J;;
-            // b += -error * J;;
+            
+            H += J * J.transpose();
+            b += -error * J;;
 
             cost += error * error;
         }
 
         // Sovle Hx = b
         Eigen::Vector3d dx = H.ldlt().solve(b);
-        if (std::isnan(dx[0]) || (iter > 0 && cost >= lastCost)) {
+        if (isnan(dx[0])) {
+            std::cout << "Result is NaN!\n";
+            break;
+        }
+
+        if (iter > 0 && cost >= lastCost) {
+            // Cost increase, Update is not good.
             std::cout << "cost: " << cost << ">= last cost: " << lastCost << ", break." << std::endl;
             break;
         }
