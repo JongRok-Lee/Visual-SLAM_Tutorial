@@ -11,6 +11,7 @@
 5.Nonlinear_Optimization/Ceres/build
 5.Nonlinear_Optimization/G2O/build
 5.Nonlinear_Optimization/Gauss-Newton/build
+5.Nonlinear_Optimization/Levenberg-Marquardt/build
 6.Visual_Odometry_1/ORB_Feature/build
 6.Visual_Odometry_1/Epipolar_Geometry/build
 6.Visual_Odometry_1/Triangulation/build
