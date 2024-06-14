@@ -4,8 +4,8 @@
 #include <thread>
 #include <opencv2/opencv.hpp>
 #include <boost/format.hpp>  // for formating strings
-#include "pangolin/pangolin.h"
-#include "sophus/se3.hpp"
+#include <pangolin/pangolin.h>
+#include <sophus/se3.hpp>
 
 
 typedef std::vector<Sophus::SE3d> TrajectoryType;

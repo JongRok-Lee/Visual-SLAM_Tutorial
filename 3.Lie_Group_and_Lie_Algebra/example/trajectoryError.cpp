@@ -1,11 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-#include "pangolin/pangolin.h"
-#include "sophus/se3.hpp"
-
-std::string groundtruth_file = "../groundtruth.txt";
-std::string estimated_file = "../estimated.txt";
+#include <pangolin/pangolin.h>
+#include <sophus/se3.hpp>
 
 typedef std::vector<Sophus::SE3d> TrajectoryType;
 
@@ -14,6 +11,9 @@ void DrawTrajectory(const TrajectoryType &gt, const TrajectoryType &esti);
 TrajectoryType ReadTrajectory(const std::string &path);
 
 int main(int argc, char **argv) {
+  std::string groundtruth_file = argv[1];
+  std::string estimated_file = argv[2];
+
   TrajectoryType groundtruth = ReadTrajectory(groundtruth_file);
   TrajectoryType estimated = ReadTrajectory(estimated_file);
   assert(!groundtruth.empty() && !estimated.empty());

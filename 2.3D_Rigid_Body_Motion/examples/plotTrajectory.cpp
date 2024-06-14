@@ -1,4 +1,4 @@
-#include "pangolin/pangolin.h"
+#include <pangolin/pangolin.h>
 #include <Eigen/Core>
 #include <thread>
 #include <chrono>
