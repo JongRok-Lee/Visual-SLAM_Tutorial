@@ -12,10 +12,10 @@ namespace Eigen {
 
 void showPointCloud(const std::vector<Eigen::Vector6d> &pointcloud);
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
 
-    std::string left_file = "../left_color.png";
-    std::string right_file = "../right_color.png";
+    std::string left_file = argv[1];
+    std::string right_file = argv[2];
 
     // Intrinsic Parameters
     double fx = 721.538, fy = 721.538, cx = 609.5593, cy = 172.8540;
