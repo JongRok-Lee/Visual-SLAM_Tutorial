@@ -3,7 +3,7 @@ project(g2oCurveFitting)
 
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(g2o REQUIRED PATHS "~/3rd_Party/G2O/g2o-20201223_git/install/lib/cmake")
+find_package(g2o REQUIRED)
 
 include_directories(
     ${g2o_INCLUDE_DIRS}

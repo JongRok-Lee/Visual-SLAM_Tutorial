@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(ceresCurveFitting)
 
 find_package(OpenCV REQUIRED)
-find_package(Ceres REQUIRED PATHS "~/3rd_Party/Ceres/ceres-solver-2.1.0/install/lib/cmake")
+find_package(Ceres REQUIRED)
 
 include_directories(
     ${CERES_INCLUDE_DIRS}

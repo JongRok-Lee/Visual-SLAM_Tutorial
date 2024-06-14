@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(useSophus)
 
 find_package(Eigen3 REQUIRED)
-find_package(Sophus REQUIRED PATHS "~/3rd_Party/Sophus/Sophus-22.10/install/share/sophus/cmake")
+find_package(Sophus REQUIRED)
 
 
 include_directories(

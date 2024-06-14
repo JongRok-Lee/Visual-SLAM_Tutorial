@@ -3,7 +3,7 @@ project(pose_estimation_3d2d)
 
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(Sophus REQUIRED PATHS "~/3rd_Party/Sophus/Sophus-22.10/install/share/sophus/cmake")
+find_package(Sophus REQUIRED)
 
 include_directories(
     ${OpenCV_INCLUDE_DIRS}

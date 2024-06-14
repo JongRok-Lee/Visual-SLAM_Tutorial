@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(stereo)
 
-find_package(Pangolin REQUIRED PATHS "~/3rd_Party/Pangolin/Pangolin-0.6/install/lib/cmake")
+find_package(Pangolin REQUIRED)
 find_package(OpenCV REQUIRED)
 
 include_directories(
