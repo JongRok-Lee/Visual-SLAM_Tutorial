@@ -1,15 +1,14 @@
-#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <Eigen/Core>
 #include <Eigen/Dense>
 #include <sophus/geometry.hpp>
 
+#include "../common.hpp"
+
 namespace Eigen {
     typedef Eigen::Matrix<double, 6, 1> Vector6d;
 }
 
-void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2, std::vector<cv::KeyPoint> &keypoints1, std::vector<cv::KeyPoint> &keypoints2, std::vector<cv::DMatch> &matches);
-cv::Point2f pixel2cam(const cv::Point2d &p, const cv::Mat &K);
 void BAGaussianNewton(const std::vector<Eigen::Vector3d> &points3D, const std::vector<Eigen::Vector2d> &points2D, const cv::Mat &K, Sophus::SE3d &pose);
 
 int main(int argc, char** argv) {
@@ -82,46 +81,6 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2, std::vector<cv::KeyPoint> &keypoints1, std::vector<cv::KeyPoint> &keypoints2, std::vector<cv::DMatch> &matches) {
-    // ORB Extraction
-    cv::Mat descriptors1, descriptors2;
-    cv::Ptr<cv::Feature2D> detector = cv::ORB::create();
-    detector->detectAndCompute(img1, cv::noArray(), keypoints1, descriptors1);
-    detector->detectAndCompute(img2, cv::noArray(), keypoints2, descriptors2);
-
-    // Brute Fore KNN matcher
-    std::vector<std::vector<cv::DMatch>> knnMatches;
-    std::vector<cv::DMatch> ratioTestMatches;
-    ratioTestMatches.reserve(knnMatches.size());
-    cv::Ptr<cv::DescriptorMatcher> matcher = cv::BFMatcher::create(cv::NORM_HAMMING);
-    matcher->knnMatch(descriptors1, descriptors2, knnMatches, 2);
-
-    for (size_t i = 0; i < knnMatches.size(); ++i) {
-        if (knnMatches[i][0].distance < 0.75 * knnMatches[i][1].distance) {
-            ratioTestMatches.push_back(knnMatches[i][0]);
-        }
-    }
-
-    std::sort(ratioTestMatches.begin(), ratioTestMatches.end());
-    int threshold = ratioTestMatches.size() * 0.5;
-
-    for (int i = 0; i < threshold; ++i) {
-        matches.push_back(ratioTestMatches[i]);
-    }
-}
-
-cv::Point2f pixel2cam(const cv::Point2d &p, const cv::Mat &K) {
-    double fx = K.at<double>(0, 0),
-           fy = K.at<double>(1, 1),
-           cx = K.at<double>(0, 2),
-           cy = K.at<double>(1, 2);
-    
-    double u = (p.x - cx) / fx,
-           v = (p.y - cy) / fy;
-    
-    return cv::Point2f(u, v);
-}
-
 void BAGaussianNewton(const std::vector<Eigen::Vector3d> &points3D, const std::vector<Eigen::Vector2d> &points2D, const cv::Mat &K, Sophus::SE3d &pose) {
     const int interations = 10;
     double cost = 0, lastCost = 0,
@@ -152,7 +111,7 @@ void BAGaussianNewton(const std::vector<Eigen::Vector3d> &points3D, const std::v
             cost += e.squaredNorm();
             Eigen::Matrix<double, 2, 6> J;
             J << -fx*zInv, 0, fx*pointCam[0]*zInv2, fx*pointCam[0]*pointCam[1]*zInv2, -fx-fx*pointCam[0]*pointCam[0]*zInv2, fx*pointCam[1]*zInv,
-                  0, -fy*zInv, fy*pointCam[1]*zInv, fy+fy*pointCam[1]*pointCam[1]*zInv2, -fy*pointCam[0]*pointCam[1]*zInv2, -fy*pointCam[0]*zInv; 
+                  0, -fy*zInv, fy*pointCam[1]*zInv, fy+fy*pointCam[1]*pointCam[1]*zInv2, -fy*pointCam[0]*pointCam[1]*zInv2, -fy*pointCam[0]*zInv;
 
             H += J.transpose() * J;
             b += -J.transpose() * e;

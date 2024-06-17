@@ -4,6 +4,7 @@ project(pose_estimation_2d2d)
 find_package(OpenCV REQUIRED)
 
 include_directories(
+    ../
     ${OpenCV_INCLUDE_DIRS}
 )
 
