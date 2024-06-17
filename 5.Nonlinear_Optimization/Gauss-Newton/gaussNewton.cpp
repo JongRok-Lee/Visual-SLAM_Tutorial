@@ -9,8 +9,8 @@ int main(int argc, char** argv) {
     int N = 100;                                // Number of data points
     double w_sigma   = 1.0;                     // Sigma of the noise
     double inv_simga = 1.0 / w_sigma;
-    cv::RNG rng;                                // OpenCV Random numver generator
-    std::cout.precision(3);                     
+    cv::RNG rng;                                // OpenCV Random number generator
+    std::cout.precision(3);
 
     std::vector<double> x_data, y_data;         // Data points
     for (size_t i = 0; i < N; ++i) {
