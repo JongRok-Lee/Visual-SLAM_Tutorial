@@ -70,3 +70,13 @@ make -j12 &&\
 make install &&\
 ldconfig &&\
 rm -rf /g20
+
+# DBow3
+WORKDIR /
+RUN git clone https://github.com/rmsalinas/DBow3.git
+WORKDIR /DBow3/build
+RUN cmake .. &&\
+make -j12 &&\
+make install &&\
+ldconfig &&\
+rm -rf /DBow3

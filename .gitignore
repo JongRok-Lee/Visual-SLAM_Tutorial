@@ -1,5 +1,6 @@
 .vscode/
 *.ply
+*.gz
 1.Introduction_to_SLAM/build
 2.3D_Rigid_Body_Motion/examples/build
 2.3D_Rigid_Body_Motion/useEigen/build
@@ -24,3 +25,4 @@
 8.Filters_and_Optimization_Approaches_1/Ceres/build
 9.Filters_and_Optimization_Approaches_2/SE3/build
 9.Filters_and_Optimization_Approaches_2/Sophus/build
+10.Loop_Closure/build
