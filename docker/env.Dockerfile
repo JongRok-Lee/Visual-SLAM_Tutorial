@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip python3-tornado python3-dev python3-numpy python3-virtualenv \
     libsuitesparse-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev \
     freeglut3-dev libglu1-mesa-dev mesa-common-dev libglew-dev libfmt-dev \
-    libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal bash-completion sudo &&\
+    libgtest-dev libopenblas-dev libgmp-dev libmpfr-dev libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal bash-completion sudo &&\
     rm -rf /var/lib/apt/lists/*
 
 # OpenCV
