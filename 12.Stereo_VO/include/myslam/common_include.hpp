@@ -5,6 +5,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <iostream>
+#include <fstream>
 #include <list>
 #include <map>
 #include <memory>
@@ -15,6 +16,7 @@
 #include <typeinfo>
 #include <unordered_map>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 // define the commonly included file to avoid a long include list
 #include <Eigen/Core>
@@ -104,9 +106,9 @@ typedef Eigen::Matrix<float, 14, 1> Vec14f;
 #include <sophus/so3.hpp>
 
 // for cv
-#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
 
-// glog
-#include <glog/logging.h>
+// spdlog
+#include "spdlog/spdlog.h"
 
 #endif  // MYSLAM_COMMON_INCLUDE_HPP

@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
   std::string config_file = "./config/default.yaml";
 
   myslam::VisualOdometry::Ptr vo = std::make_shared<myslam::VisualOdometry>(config_file);
-
-  std::cout << config_file << std::endl;
+  vo->init();
+  vo->run();
 
   return 0;
 }
