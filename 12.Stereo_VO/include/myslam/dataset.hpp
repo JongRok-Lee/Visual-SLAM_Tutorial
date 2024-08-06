@@ -58,7 +58,7 @@ public:
   Frame::Ptr NextFrame() {
     boost::format fmt("%s/image_%d/%06d.png");
     // Read images
-    SPDLOG_INFO("Read! {}", (fmt % dataset_path_ % 0 % current_image_index_).str());
+    SPDLOG_INFO("{}", (fmt % dataset_path_ % 0 % current_image_index_).str());
     img_left_ = cv::imread((fmt % dataset_path_ % 0 % current_image_index_).str(), cv::IMREAD_GRAYSCALE);
     img_right_ = cv::imread((fmt % dataset_path_ % 1 % current_image_index_).str(), cv::IMREAD_GRAYSCALE);
     if (img_left_.data == nullptr || img_right_.data == nullptr) {

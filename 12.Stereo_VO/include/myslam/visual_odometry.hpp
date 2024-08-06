@@ -28,7 +28,7 @@ public:
 
   void run() {
     while (step()) {
-      SPDLOG_INFO("Frame: {}", dataset_->getCurrentImageIndex());
+      // Do something
     }
   }
   bool step(){
