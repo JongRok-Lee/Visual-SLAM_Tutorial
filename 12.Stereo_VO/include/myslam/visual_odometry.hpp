@@ -3,6 +3,7 @@
 
 #include "myslam/common_include.hpp"
 #include "myslam/dataset.hpp"
+#include "myslam/frontend.hpp"
 
 namespace myslam {
 class VisualOdometry {
@@ -22,6 +23,8 @@ public:
       return false;
     }
 
+    frontend_ = std::make_shared<Frontend>(config_["frontend"]);
+
 
     return true;
   }
@@ -34,6 +37,7 @@ public:
   bool step(){
     Frame::Ptr new_frame = dataset_->NextFrame();
     if (new_frame == nullptr) return false;
+    bool success = frontend_->addFrame(new_frame);
 
     return true;
   }
@@ -44,6 +48,7 @@ private:
 
   YAML::Node config_;
   Dataset::Ptr dataset_ = nullptr;
+  Frontend::Ptr frontend_ = nullptr;
 };
 } // namespace myslam
 

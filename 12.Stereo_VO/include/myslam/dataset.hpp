@@ -77,6 +77,8 @@ public:
     current_image_index_++;
 
     Frame::Ptr new_frame = Frame::createFrame();
+    new_frame->left_img_ = img_left_resized_;
+    new_frame->right_img_ = img_right_resized_;
     return new_frame;
   }
 

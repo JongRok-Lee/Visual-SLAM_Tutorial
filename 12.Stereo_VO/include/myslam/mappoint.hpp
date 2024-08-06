@@ -2,11 +2,10 @@
 #define MYSLAM_MAPPOINT_HPP
 
 #include "myslam/common_include.hpp"
-#include "myslam/feature.hpp"
-#include "myslam/frame.hpp"
 
 namespace myslam {
 struct Feature;
+struct Frame;
 
 struct MapPoint {
 public:
@@ -32,17 +31,7 @@ public:
     observed_times_++;
   }
 
-  void removeObservation(std::shared_ptr<Feature> feature) {
-    std::unique_lock<std::mutex> lck(data_mutex_);
-    for (auto iter = observations_.begin(); iter != observations_.end(); iter++) {
-      if (iter->lock() == feature) {
-        observations_.erase(iter);
-        feature->map_point_.reset();
-        observed_times_--;
-        break;
-      }
-    }
-  }
+  void removeObservation(std::shared_ptr<Feature> feature);
 
   std::list<std::weak_ptr<Feature>> getObservations() {
     std::unique_lock<std::mutex> lck(data_mutex_);
