@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(myslam LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall)
 
@@ -39,7 +39,7 @@ set(THIRD_PARTY_LIBS
     ${Pangolin_LIBRARIES} GL GLU GLEW glut
     g2o::core g2o::stuff g2o::types_sba g2o::solver_csparse g2o::csparse_extension
     ${GTEST_BOTH_LIBRARIES}
-    ${GLOG_LIBRARIES}
+    glog::glog
     ${GFLAGS_LIBRARIES}
     pthread
     ${CSPARSE_LIBRARY}
