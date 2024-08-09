@@ -13,47 +13,43 @@ public:
   typedef std::shared_ptr<MapPoint> Ptr;
 
   MapPoint() = default;
-  MapPoint(long id, const Eigen::Vec3 &position) : id_(id), pos_(position) {}
 
-  Eigen::Vec3 getPos() {
+  MapPoint(long id, Vec3 position);
+
+  Vec3 Pos() {
     std::unique_lock<std::mutex> lck(data_mutex_);
     return pos_;
   }
 
-  void setPos(const Eigen::Vec3 &pos) {
+  void SetPos(const Vec3 &pos) {
     std::unique_lock<std::mutex> lck(data_mutex_);
     pos_ = pos;
-  }
+  };
 
-  void addObservation(std::shared_ptr<Feature> feature) {
+  void AddObservation(std::shared_ptr<Feature> feature) {
     std::unique_lock<std::mutex> lck(data_mutex_);
     observations_.push_back(feature);
     observed_times_++;
   }
 
-  void removeObservation(std::shared_ptr<Feature> feature);
+  void RemoveObservation(std::shared_ptr<Feature> feat);
 
-  std::list<std::weak_ptr<Feature>> getObservations() {
+  std::list<std::weak_ptr<Feature>> GetObs() {
     std::unique_lock<std::mutex> lck(data_mutex_);
     return observations_;
   }
 
-  static MapPoint::Ptr createMapPoint() {
-    static long factory_id = 0;
-    MapPoint::Ptr new_mappoint = std::make_shared<MapPoint>();
-    new_mappoint->id_ = factory_id++;
-    return new_mappoint;
-  }
+  // factory function
+  static MapPoint::Ptr CreateNewMappoint();
 
 public:
-  unsigned long id_ = 0;
+  unsigned long id_ = 0;  // ID
   bool is_outlier_ = false;
-  Eigen::Vec3 pos_ = Eigen::Vec3::Zero();
+  Vec3 pos_ = Vec3::Zero();  // Position in world
   std::mutex data_mutex_;
-  int observed_times_ = 0; // being observed by feature matching algorithm
+  int observed_times_ = 0;  // being observed by feature matching algo.
   std::list<std::weak_ptr<Feature>> observations_;
-
 };
-} // namespace myslam
+}  // namespace myslam
 
-#endif // MYSLAM_MAPPOINT_HPP
+#endif  // MYSLAM_MAPPOINT_HPP

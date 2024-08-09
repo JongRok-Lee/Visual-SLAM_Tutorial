@@ -1,9 +1,11 @@
 #ifndef MYSLAM_VISUAL_ODOMETRY_HPP
 #define MYSLAM_VISUAL_ODOMETRY_HPP
 
+#include "myslam/backend.hpp"
 #include "myslam/common_include.hpp"
 #include "myslam/dataset.hpp"
 #include "myslam/frontend.hpp"
+#include "myslam/viewer.hpp"
 
 namespace myslam {
 class VisualOdometry {
@@ -11,45 +13,28 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
   typedef std::shared_ptr<VisualOdometry> Ptr;
 
-  VisualOdometry(const std::string &config_path) : config_file_path_(config_path) {}
+  VisualOdometry(std::string &config_path);
 
-  bool init() {
-    // read from config file
-    std::cout << "VisualOdometry Init!\n";
-    config_ = YAML::LoadFile(config_file_path_);
+  bool Init();
 
-    dataset_ = std::make_shared<Dataset>(config_["dataset_dir"].as<std::string>());
-    if (!dataset_->init()) {
-      return false;
-    }
+  void Run();
 
-    frontend_ = std::make_shared<Frontend>(config_["frontend"]);
+  bool Step();
 
-
-    return true;
-  }
-
-  void run() {
-    while (step()) {
-      // Do something
-    }
-  }
-  bool step(){
-    Frame::Ptr new_frame = dataset_->NextFrame();
-    if (new_frame == nullptr) return false;
-    bool success = frontend_->addFrame(new_frame);
-
-    return true;
-  }
+  FrontendStatus GetFrontendStatus() const { return frontend_->GetStatus(); }
 
 private:
   bool inited_ = false;
-  const std::string config_file_path_;
+  std::string config_file_path_;
 
-  YAML::Node config_;
-  Dataset::Ptr dataset_ = nullptr;
   Frontend::Ptr frontend_ = nullptr;
-};
-} // namespace myslam
+  Backend::Ptr backend_ = nullptr;
+  Map::Ptr map_ = nullptr;
+  Viewer::Ptr viewer_ = nullptr;
 
-#endif // MYSLAM_VISUAL_ODOMETRY_HPP
+  // dataset
+  Dataset::Ptr dataset_ = nullptr;
+};
+}  // namespace myslam
+
+#endif  // MYSLAM_VISUAL_ODOMETRY_HPP

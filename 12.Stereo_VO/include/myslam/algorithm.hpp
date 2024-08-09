@@ -5,16 +5,12 @@
 
 namespace myslam {
 
-bool triangulation(const std::vector<Sophus::SE3d> &poses,
-                   const std::vector<Eigen::Vec3> points,
-                   Eigen::Vec3 &pt_world)
-{
-  Eigen::MatXX A(2 * poses.size(), 4);
-  Eigen::VecX b(2 * poses.size());
+inline bool triangulation(const std::vector<SE3> &poses, const std::vector<Vec3> points, Vec3 &pt_world) {
+  MatXX A(2 * poses.size(), 4);
+  VecX b(2 * poses.size());
   b.setZero();
-
   for (size_t i = 0; i < poses.size(); ++i) {
-    Eigen::Mat34 m = poses[i].matrix3x4();
+    Mat34 m = poses[i].matrix3x4();
     A.block<1, 4>(2 * i, 0) = points[i][0] * m.row(2) - m.row(0);
     A.block<1, 4>(2 * i + 1, 0) = points[i][1] * m.row(2) - m.row(1);
   }
@@ -24,13 +20,11 @@ bool triangulation(const std::vector<Sophus::SE3d> &poses,
   if (svd.singularValues()[3] / svd.singularValues()[2] < 1e-2) {
     return true;
   }
-
   return false;
 }
 
-inline Eigen::Vec2 toVec2(const cv::Point2f p) {
-  return Eigen::Vec2(p.x, p.y);
-  }
-}
+inline Vec2 toVec2(const cv::Point2f p) { return Vec2(p.x, p.y); }
 
-#endif // MYSLAM_ALGORITHM_HPP
+}  // namespace myslam
+
+#endif  // MYSLAM_ALGORITHM_HPP
